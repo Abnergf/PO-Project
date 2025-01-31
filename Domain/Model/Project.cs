@@ -17,11 +17,10 @@ namespace Model
         public Status Status { get; set; }
         [JsonIgnore]
         public ICollection<ProjectTasks> ProjectTasks { get; set; }
+        public ICollection<TaskFiles> TaskFiles { get; set; }
         public ICollection<ProfessionalsInProjects> ProfessionalsInProjects { get; } = new List<ProfessionalsInProjects>();
-        public Project()
+        private Project()
         {
-            Title = string.Empty;
-            Description = string.Empty;
             ProjectTasks = new List<ProjectTasks>();
         }
         public Project(CreateProjectRequest createProjectRequest)

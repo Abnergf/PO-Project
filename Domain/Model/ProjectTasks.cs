@@ -25,8 +25,10 @@ namespace Model
         public int ProjectId { get; set; }
         public virtual Project Project { get; set; }
         public Status Status { get; set; }
-        private ProjectTasks()
+        public virtual ICollection<TaskFiles> TaskFiles { get; set; }
+        public ProjectTasks()
         {
+            TaskFiles = new List<TaskFiles>();
         }
         public ProjectTasks(CreateProjectTaskRequest create)
         {

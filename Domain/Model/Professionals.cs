@@ -8,14 +8,13 @@ namespace Model
         public int Id { get; set; }
         [MaxLength(100)]
         public string Name { get; set; }
-        public int FieldOfOperationCode { get; set; }
+        public int? FieldOfOperationCode { get; set; }
         public virtual FieldOfOperation FieldOfOperation { get; set; }
         public DateTime CreationDate { get; set; }
         public bool Active { get; set; }
         public ICollection<ProjectTasks> ProjectTasks { get; set; }
         private Professionals()
-        {
-        }
+        {}
         public Professionals(CreateProfessionalsRequest create)
         {
             Name = create.Name;

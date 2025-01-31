@@ -9,6 +9,8 @@ namespace Projeto_Principal.Controller
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectService _projectService;
+        private object createTaskFilesRequest;
+
         public ProjectsController(IProjectService projectService)
         {
             _projectService = projectService;
@@ -38,6 +40,27 @@ namespace Projeto_Principal.Controller
         public async Task<ActionResult> DeleteProject(int id)
         {
             await _projectService.DeleteProject(id);
+            return Ok();
+        }
+        [HttpGet("check-taskfiles")]
+        public async Task<ActionResult<IEnumerable<ProjectTaskFilesResponse>>> CheckFilesTask()
+        {
+            return Ok(new
+            {
+                sucess = true,
+                data = await _projectService.CheckFilesTask()
+            });
+        }
+        [HttpPost("create-taskfiles")]
+        public async Task<ActionResult> CreateTaskFiles(CreateTaskFilesRequest createTaskFilesRequest)
+        {
+            await _projectService.CreateTaskFiles(createTaskFilesRequest);
+            return Ok();
+        }
+        [HttpPut("alter-taskfiles")]
+        public async Task<ActionResult> AlterTaskFiles(AlterTaskFilesRequest alterTaskFilesRequest)
+        {
+            await _projectService.AlterTaskFiles(alterTaskFilesRequest);
             return Ok();
         }
     }

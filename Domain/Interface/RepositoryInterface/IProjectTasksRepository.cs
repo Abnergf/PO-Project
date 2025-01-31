@@ -9,5 +9,7 @@ namespace Domain.Interface.RepositoryInterface
         Task AlterProjectTasks(ProjectTasks projectTasks);
         Task<ProjectTasks?> GetByIdAsync(int id);
         Task DeleteProjectTasks(int id);
+        Task DeleteListOfProjectTasks(IEnumerable<int> projectTasksIds);
+        Task DeleteTaskFiles(IEnumerable<int> tasksIds); //rever o repo;
     }
 }
