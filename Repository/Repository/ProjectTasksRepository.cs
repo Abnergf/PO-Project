@@ -51,5 +51,20 @@ namespace Infra.Repository
             _context.ProjectTasks.Remove(projectTasks);
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteListOfProjectTasks(IEnumerable<int> projectTasksIds)
+        {
+            var projectTasks = await _context.ProjectTasks.Where(p => projectTasksIds.Contains(p.Id)).ToListAsync();
+            _context.ProjectTasks.RemoveRange(projectTasks);
+        }
+
+        public async Task DeleteTaskFiles(IEnumerable<int> tasksIds)
+        {
+            var taskFiles = await _context.TaskFiles
+                            .Where(p => tasksIds
+                            .Contains(p.Id))
+                            .ToListAsync();
+            _context.TaskFiles.RemoveRange(taskFiles);
+        }
     }
 }

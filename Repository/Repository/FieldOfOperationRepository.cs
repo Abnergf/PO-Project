@@ -44,6 +44,14 @@ namespace Infra.Repository
         public async Task DeleteFieldOfOperation(int id)
         {
             var fieldOfOperation = await _context.FieldOfOperation.FindAsync(id);
+            var professionals = _context.Professionals
+                                        .Where(p => p.FieldOfOperationCode == fieldOfOperation.Code).ToList();
+            foreach (var professional in professionals)
+            {
+                professional.FieldOfOperationCode = null ;
+                _context.Professionals.Update(professional);
+            }
+            await _context.SaveChangesAsync();
             _context.FieldOfOperation.Remove(fieldOfOperation);
             await _context.SaveChangesAsync();
         }

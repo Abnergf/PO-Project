@@ -64,7 +64,7 @@ namespace Projeto_Principal.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FieldOfOperationCode")
+                    b.Property<int?>("FieldOfOperationCode")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -210,12 +210,17 @@ namespace Projeto_Principal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TaskId")
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectTaskId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TaskId");
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("ProjectTaskId");
 
                     b.ToTable("TaskFiles");
                 });
@@ -225,9 +230,7 @@ namespace Projeto_Principal.Migrations
                     b.HasOne("Model.FieldOfOperation", "FieldOfOperation")
                         .WithMany("Professionals")
                         .HasForeignKey("FieldOfOperationCode")
-                        .HasPrincipalKey("Code")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasPrincipalKey("Code");
 
                     b.Navigation("FieldOfOperation");
                 });
@@ -249,7 +252,7 @@ namespace Projeto_Principal.Migrations
                     b.HasOne("Model.Project", "Project")
                         .WithMany("ProfessionalsInProjects")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("FieldOfOperation");
@@ -280,9 +283,13 @@ namespace Projeto_Principal.Migrations
 
             modelBuilder.Entity("Model.TaskFiles", b =>
                 {
+                    b.HasOne("Model.Project", null)
+                        .WithMany("TaskFiles")
+                        .HasForeignKey("ProjectId");
+
                     b.HasOne("Model.ProjectTasks", "ProjectTasks")
-                        .WithMany()
-                        .HasForeignKey("TaskId")
+                        .WithMany("TaskFiles")
+                        .HasForeignKey("ProjectTaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -304,6 +311,13 @@ namespace Projeto_Principal.Migrations
                     b.Navigation("ProfessionalsInProjects");
 
                     b.Navigation("ProjectTasks");
+
+                    b.Navigation("TaskFiles");
+                });
+
+            modelBuilder.Entity("Model.ProjectTasks", b =>
+                {
+                    b.Navigation("TaskFiles");
                 });
 #pragma warning restore 612, 618
         }

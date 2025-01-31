@@ -12,8 +12,8 @@ using Repository.MainDbContext;
 namespace Projeto_Principal.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20250122194847_FourthMigration")]
-    partial class FourthMigration
+    [Migration("20250129200948_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,6 @@ namespace Projeto_Principal.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Code")
-                        .HasMaxLength(200)
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
@@ -150,7 +149,7 @@ namespace Projeto_Principal.Migrations
                     b.ToTable("Project");
                 });
 
-            modelBuilder.Entity("Model.ProjectTasks", b =>
+            modelBuilder.Entity("Model.Tasks", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -195,7 +194,7 @@ namespace Projeto_Principal.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("ProjectTasks");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("Model.TaskFiles", b =>
@@ -214,12 +213,12 @@ namespace Projeto_Principal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TaskId")
+                    b.Property<int>("ProjectTaskId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TaskId");
+                    b.HasIndex("ProjectTaskId");
 
                     b.ToTable("TaskFiles");
                 });
@@ -263,10 +262,10 @@ namespace Projeto_Principal.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Model.ProjectTasks", b =>
+            modelBuilder.Entity("Model.Tasks", b =>
                 {
                     b.HasOne("Model.Professionals", "Professional")
-                        .WithMany()
+                        .WithMany("Tasks")
                         .HasForeignKey("ProfessionalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -284,13 +283,13 @@ namespace Projeto_Principal.Migrations
 
             modelBuilder.Entity("Model.TaskFiles", b =>
                 {
-                    b.HasOne("Model.ProjectTasks", "ProjectTasks")
-                        .WithMany()
-                        .HasForeignKey("TaskId")
+                    b.HasOne("Model.Tasks", "Tasks")
+                        .WithMany("TaskFiles")
+                        .HasForeignKey("ProjectTaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProjectTasks");
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("Model.FieldOfOperation", b =>
@@ -298,11 +297,21 @@ namespace Projeto_Principal.Migrations
                     b.Navigation("Professionals");
                 });
 
+            modelBuilder.Entity("Model.Professionals", b =>
+                {
+                    b.Navigation("Tasks");
+                });
+
             modelBuilder.Entity("Model.Project", b =>
                 {
                     b.Navigation("ProfessionalsInProjects");
 
                     b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("Model.Tasks", b =>
+                {
+                    b.Navigation("TaskFiles");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,11 +16,13 @@ namespace Repository.MainDbContext
             modelBuilder.Entity<Project>()
              .HasMany(e => e.ProfessionalsInProjects)
             .WithOne(e => e.Project)
-            .HasForeignKey(e => e.ProjectId);
+            .HasForeignKey(e => e.ProjectId)
+            .OnDelete(DeleteBehavior.SetNull);
             modelBuilder.Entity<Project>()
              .HasMany(e => e.ProjectTasks)
             .WithOne(e => e.Project)
             .HasForeignKey(e => e.ProjectId);
+
             modelBuilder.Entity<FieldOfOperation>(entity =>
             {
                 entity.HasKey(f => f.Id);
@@ -47,6 +49,9 @@ namespace Repository.MainDbContext
             modelBuilder.Entity<TaskFiles>(entity =>
             {
                 entity.HasKey(t => t.Id);
+                entity.HasOne(tf => tf.ProjectTasks)
+                .WithMany(pt => pt.TaskFiles)
+                .HasForeignKey(tf => tf.ProjectTaskId);
             });
             OnModelCreatingPartial(modelBuilder);
         }
