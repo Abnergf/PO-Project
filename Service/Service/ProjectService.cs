@@ -57,5 +57,12 @@ namespace Core.Service
             taskFiles.Update(alterTaskFiles);
             await _projectRepository.AlterTaskFiles(taskFiles);
         }
+        public async Task DeleteTaskFiles(int id)
+        {
+            var taskFiles = await _projectRepository.GetTaskFilesByIdAsync(id);
+            if (taskFiles == null)
+                throw new ArgumentException("Id Not Found");
+            await _projectRepository.DeleteTaskFiles(id);
+        }
     }
 }

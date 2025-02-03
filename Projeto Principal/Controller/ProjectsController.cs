@@ -63,5 +63,11 @@ namespace Projeto_Principal.Controller
             await _projectService.AlterTaskFiles(alterTaskFilesRequest);
             return Ok();
         }
+        [HttpDelete("delete-taskfiles/{id}")]
+        public async Task<ActionResult> DeleteTaskFiles(int id)
+        {
+            await _projectService.DeleteTaskFiles(id);
+            return Ok();
+        }
     }
 }

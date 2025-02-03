@@ -12,5 +12,6 @@ namespace Domain.Interface.ServiceInterface
         public Task<IEnumerable<ProjectTaskFilesResponse>> CheckFilesTask();
         Task CreateTaskFiles(CreateTaskFilesRequest createTaskFilesRequest);
         Task AlterTaskFiles(AlterTaskFilesRequest alterTaskFilesRequest);
+        Task DeleteTaskFiles(int id);
     }
 }

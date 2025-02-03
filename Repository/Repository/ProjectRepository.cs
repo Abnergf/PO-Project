@@ -1,5 +1,4 @@
 ﻿using Domain.Interface.RepositoryInterface;
-using Domain.Request;
 using Domain.Response;
 using Microsoft.EntityFrameworkCore;
 using Model;
@@ -88,6 +87,12 @@ namespace Infra.Repository
         public async Task<TaskFiles?> GetTaskFilesByIdAsync(int id)
         {
             return await _context.TaskFiles.FindAsync(id);
+        }
+        public async Task DeleteTaskFiles(int id)
+        {
+            var taskFiles = await _context.TaskFiles.FindAsync(id);
+            _context.TaskFiles.Remove(taskFiles);
+            await _context.SaveChangesAsync();
         }
     }
 }

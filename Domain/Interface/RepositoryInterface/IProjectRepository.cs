@@ -14,5 +14,6 @@ namespace Domain.Interface.RepositoryInterface
         Task CreateTaskFiles(TaskFiles taskFiles);
         Task AlterTaskFiles(TaskFiles taskFiles);
         Task<TaskFiles?> GetTaskFilesByIdAsync(int id);
+        Task DeleteTaskFiles(int id);
     }
 }
