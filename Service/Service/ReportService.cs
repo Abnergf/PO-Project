@@ -31,7 +31,7 @@ namespace Core.Service
                 .Sum(t => (int)(t.CompletedDate - t.StartDate).TotalHours),
                 TotalHoursUnfinishedTasks = g.ProjectTasks
                 .Where(t => t.Status != Status.Completed)
-                .Select(t => new { t.StartDate }).AsEnumerable()
+                .Select(t => new { t.StartDate }).AsEnumerable() // teste
                 .Sum(t => (int)(DateTime.UtcNow - t.StartDate).TotalHours)
             })
             .ToList();
