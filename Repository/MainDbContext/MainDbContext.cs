@@ -14,12 +14,12 @@ namespace Repository.MainDbContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Project>()
-             .HasMany(e => e.ProfessionalsInProjects)
+            .HasMany(e => e.ProfessionalsInProjects)
             .WithOne(e => e.Project)
             .HasForeignKey(e => e.ProjectId)
             .OnDelete(DeleteBehavior.SetNull);
             modelBuilder.Entity<Project>()
-             .HasMany(e => e.ProjectTasks)
+            .HasMany(e => e.ProjectTasks)
             .WithOne(e => e.Project)
             .HasForeignKey(e => e.ProjectId);
 
