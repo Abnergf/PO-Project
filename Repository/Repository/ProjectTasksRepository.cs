@@ -47,8 +47,19 @@ namespace Infra.Repository
         }
         public async Task DeleteProjectTasks(int id)
         {
-            var projectTasks = await _context.ProjectTasks.FindAsync(id);
-            _context.ProjectTasks.Remove(projectTasks);
+            var projectTask = await _context.ProjectTasks
+                .Include(pt => pt.TaskFiles)
+                .FirstOrDefaultAsync(pt => pt.Id == id);
+
+            if (projectTask == null)
+            {
+                throw new Exception("ProjectTask not found");
+            }
+            foreach (var taskFile in projectTask.TaskFiles)
+            {
+                _context.TaskFiles.Remove(taskFile);
+            }
+            _context.ProjectTasks.Remove(projectTask);
             await _context.SaveChangesAsync();
         }
 

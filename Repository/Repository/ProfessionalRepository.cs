@@ -44,6 +44,20 @@ namespace Infra.Repository
         }
         public async Task DeleteProfessionals(Professionals professionals)
         {
+            var projectTasks = await _context.ProjectTasks
+                .Where(pt => pt.ProfessionalId == professionals.Id)
+                .ToListAsync();
+            foreach (var task in projectTasks)
+            {
+                var taskFiles = await _context.TaskFiles
+                    .Where(tf => tf.ProjectTaskId == task.Id)
+                    .ToListAsync();
+                foreach (var file in taskFiles)
+                {
+                    _context.TaskFiles.Remove(file);
+                }
+                _context.ProjectTasks.Remove(task);
+            }
             _context.Professionals.Remove(professionals);
             await _context.SaveChangesAsync();
         }
