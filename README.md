@@ -2,8 +2,7 @@
 
 Projeto realizado para que seja possível a criação de projetos, profissionais, campos de operação, Tasks para os projetos, e um relatório separado.
 
-Utilizadas as técnologias como injeção de dependência, Entity, com padrão de Clean code e utilizando o SQL Server(local).
-
+Utilizadas as técnologias como injeção de dependência, Entity Framework, com padrão de Clean code e utilizando o SQL Server(local).
 
 Realização obrigatória de CRUD e relatórios.
 
