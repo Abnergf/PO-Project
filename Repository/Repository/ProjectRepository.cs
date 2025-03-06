@@ -36,28 +36,25 @@ namespace Infra.Repository
             _context.Project.Update(project);
             await _context.SaveChangesAsync();
         }
-        public async Task<Project?> GetProjectByIdAsync (int id)
+        public async Task<Project?> GetProjectByIdAsync(int id)
         {
             return await _context.Project.FindAsync(id);
         }
         public async Task DeleteProject(int id)
         {
             var project = await _context.Project.FindAsync(id);
-            
+
             var projectTasks = await _context.ProjectTasks
                                .Where(p => p.ProjectId == project.Id)
                                .ToListAsync();
-
             foreach (var projectTask in projectTasks)
             {
                 var taskFiles = await _context.TaskFiles
                                 .Where(f => f.ProjectTaskId == projectTask.Id)
                                 .ToListAsync();
-
                 _context.TaskFiles.RemoveRange(taskFiles);
                 _context.ProjectTasks.Remove(projectTask);
             }
-
             _context.Project.Remove(project);
             await _context.SaveChangesAsync();
         }

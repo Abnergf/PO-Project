@@ -13,8 +13,7 @@ namespace Model
         public DateTime CreationDate { get; set; }
         public virtual ICollection<Professionals> Professionals { get; set; }
         private FieldOfOperation()
-        {
-        }
+        {}
         public FieldOfOperation(CreateFieldOfOperationRequest createFieldOfOperation)
         {
             Title = createFieldOfOperation.Title;

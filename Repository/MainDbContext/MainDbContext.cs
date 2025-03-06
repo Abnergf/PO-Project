@@ -22,7 +22,6 @@ namespace Repository.MainDbContext
             .HasMany(e => e.ProjectTasks)
             .WithOne(e => e.Project)
             .HasForeignKey(e => e.ProjectId);
-
             modelBuilder.Entity<FieldOfOperation>(entity =>
             {
                 entity.HasKey(f => f.Id);

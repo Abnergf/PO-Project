@@ -50,7 +50,6 @@ namespace Infra.Repository
             var projectTask = await _context.ProjectTasks
                 .Include(pt => pt.TaskFiles)
                 .FirstOrDefaultAsync(pt => pt.Id == id);
-
             if (projectTask == null)
             {
                 throw new Exception("ProjectTask not found");
@@ -62,13 +61,11 @@ namespace Infra.Repository
             _context.ProjectTasks.Remove(projectTask);
             await _context.SaveChangesAsync();
         }
-
         public async Task DeleteListOfProjectTasks(IEnumerable<int> projectTasksIds)
         {
             var projectTasks = await _context.ProjectTasks.Where(p => projectTasksIds.Contains(p.Id)).ToListAsync();
             _context.ProjectTasks.RemoveRange(projectTasks);
         }
-
         public async Task DeleteTaskFiles(IEnumerable<int> tasksIds)
         {
             var taskFiles = await _context.TaskFiles

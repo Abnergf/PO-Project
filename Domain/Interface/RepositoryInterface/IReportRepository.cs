@@ -7,6 +7,5 @@ namespace Domain.Interface.RepositoryInterface
         Task<IEnumerable<ReportProjectResponse>> ProjectReport();
         Task<List<Professionals>> ProfessionalReport();
         Task<IEnumerable<ReportProjectTimeResponse>> ProjectTime(int HourParameter);
-
     }
 }

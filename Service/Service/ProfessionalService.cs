@@ -2,7 +2,6 @@
 using Domain.Interface.ServiceInterface;
 using Domain.Request;
 using Domain.Response;
-using Infra.Repository;
 using Model;
 namespace Core.Service
 {

@@ -1,5 +1,4 @@
-﻿using Domain.Request;
-using Domain.Response;
+﻿using Domain.Response;
 using Model;
 namespace Domain.Interface.RepositoryInterface
 {
